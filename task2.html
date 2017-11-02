@@ -56,7 +56,7 @@ input { font:12px arial; }
 
     </style>
 </head>
-<body>
+<body onload="chatBackUp()">
     <h2 color= lightblue > Simple Chat Application </h2>
 
 
@@ -71,10 +71,11 @@ input { font:12px arial; }
       	
       </div>
      
-    <form >
-        <input  type="text" id="input"/>
-        </form>
-        <button onclick="loadMsg()">Send </button>
+     <div id=reset>
+        <input  type="text" id="input" />
+    </div>
+    
+        <button id="send" >Send </button>
         
     
 

@@ -7,24 +7,55 @@ sock.onerror = function(error){
    console.log('Error detected: ' + error);
 
 }
+function chatBackUp()
+{
+
+   var userMessages =JSON.parse(sessionStorage.getItem('userMessages'));
+    var botMessages =JSON.parse(sessionStorage.getItem('botMessages'));
+
+var print='';
+  
+    for(var i=0;i<botMessages.length;i++)
+    {
+      print += "<div id=inputmsg><h3>" + userMessages[i] + "</h3></div>"
+      + "<div id=outputmsg> <h3>" + botMessages[i] + "</h3></div>";
+    }
+   var backUp= document.getElementById("message");
+   backUp.innerHTML=print;
+
+
+}
+
 
 function printMsg(msg)
 {
 
-
-  var print='';
+var print='';
   print="<div id=outputmsg> <h3>"+ msg.text + "</h3></div>";
-  if(msg.text== undefined)
-  {
-  }
+  if(msg.text == undefined)
+  {}
   else
   {
 
-  var para =document.createElement("div");
-var t = document.createTextNode(print);      
-para.appendChild(t);                                        
-var u = document.getElementById("message").appendChild(para);
-  u.innerHTML= print; 
+      if(sessionStorage.getItem('botMessages') === null)
+    {
+        var botMessages=[];
+        botMessages.push(msg.text);
+         sessionStorage.setItem('botMessages',JSON.stringify(botMessages));
+    }
+      else
+   {
+        var botMessages =JSON.parse(sessionStorage.getItem('botMessages'));
+         botMessages.push(msg.text);
+        sessionStorage.setItem('botMessages',JSON.stringify(botMessages));
+
+  }
+
+      var para =document.createElement("div");
+      var t = document.createTextNode(print);      
+      para.appendChild(t);                                        
+      var u = document.getElementById("message").appendChild(para);
+      u.innerHTML= print; 
 }
   var a='';
     for(x in msg.quick_replies)
@@ -42,6 +73,21 @@ var u = document.getElementById("message").appendChild(para);
 function sendMsg(msg)
 {
 
+  if(sessionStorage.getItem('userMessages') === null)
+  {
+    var userMessages=[];
+    userMessages.push(msg);
+    sessionStorage.setItem('userMessages',JSON.stringify(userMessages));
+  }
+  else
+  {
+    var userMessages =JSON.parse(sessionStorage.getItem('userMessages'));
+
+
+    userMessages.push(msg);
+    sessionStorage.setItem('userMessages',JSON.stringify(userMessages));
+
+  }
   var print='';
   print="<div id=inputmsg><h3>"+ msg + "</h3></div>";
 
@@ -70,7 +116,6 @@ sock.onmessage = function(e){
 function loadMsg()
 {
   var msg = document.getElementById('input').value;
-  console.log(msg);
 
   
 
@@ -83,4 +128,15 @@ function loadMsg()
     	sendMsg(msg);
       }
 }
+document.getElementById('send').addEventListener('click', loadMsg);
 
+document.getElementById("input").addEventListener("keyup",function(e)
+{
+  e.preventDefault();
+  if(e.keyCode === 13)
+  {
+    document.getElementById('send').click();
+ //   document.getElementById('reset').reset();
+  }
+
+})
