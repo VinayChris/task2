@@ -1,7 +1,7 @@
 var sock = new WebSocket("wss://cyberbot-qa.herokuapp.com");
 
 sock.onopen = function(){
-   console.log('Connection open!');
+  // console.log('Connection open!');
 }
 sock.onerror = function(error){
    console.log('Error detected: ' + error);
