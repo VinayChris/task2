@@ -10,6 +10,12 @@ sock.onerror = function(error){
 function chatBackUp()
 {
 
+  if(sessionStorage.getItem('botMessages')== null)
+  {
+
+  }
+  else
+  {
    var userMessages =JSON.parse(sessionStorage.getItem('userMessages'));
     var botMessages =JSON.parse(sessionStorage.getItem('botMessages'));
 
@@ -22,7 +28,7 @@ var print='';
     }
    var backUp= document.getElementById("message");
    backUp.innerHTML=print;
-
+}
 
 }
 
